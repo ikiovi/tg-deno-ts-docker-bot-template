@@ -10,7 +10,6 @@
       "plugin:@typescript-eslint/recommended"
     ],
     "rules":{
-        "camelcase":"off",
         "dot-notation":"warn",
         "no-extra-semi":"warn",
         "no-extra-boolean-cast":"off",
