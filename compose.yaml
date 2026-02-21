@@ -1,0 +1,13 @@
+services:
+  bot:
+    build:
+      context: .
+    stop_signal: SIGINT
+    restart: on-failure
+    env_file: .env
+
+    # or
+
+    # environment:
+    #     - LOG_LEVEL=warn
+    #     - DISABLE_LOG_TIMESTAMP=false

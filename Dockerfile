@@ -1,11 +1,19 @@
-From denoland/deno:alpine
+# https://docs.deno.com/runtime/reference/docker/#use-multi-stage-builds
+FROM denoland/deno:alpine-2.6.1 AS builder
 
 WORKDIR /app
+COPY deno.json deno.lock ./
 
-COPY src/deps.ts src/deps.ts
-RUN deno cache src/deps.ts
+ENV DENO_DIR=build/cache
 
-ADD . .
-RUN deno cache src/bot.ts
+RUN deno run install-deps
 
-CMD ["task", "start"]
+FROM denoland/deno:alpine-2.6.1
+
+WORKDIR /app
+COPY --from=builder /app .
+COPY . .
+
+ENV DENO_DIR=build/cache
+
+ENTRYPOINT [ "deno", "task", "start" ]
